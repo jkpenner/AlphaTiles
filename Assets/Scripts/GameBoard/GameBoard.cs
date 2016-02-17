@@ -28,6 +28,7 @@ public class GameBoard : Singleton<GameBoard>{
         // Create a sub group for all the tiles to be parented to
         var tileGroupGO = new GameObject("Tiles");
         tileGroupGO.transform.SetParent(this.transform);
+        tileGroupGO.transform.localPosition = Vector2.zero;
 
         // Calculate the min values for positions of tiles
         float xMin = (boardWidth + (boardSpacing.x * (boardWidth - 1f))) / 2f;
@@ -50,6 +51,7 @@ public class GameBoard : Singleton<GameBoard>{
             }
             slots[x, 0].SlotTile = Instantiate(tilePrefab).GetComponent<Tile>();
             slots[x, 0].SlotTile.SetText(x.ToString());
+            slots[x, 0].SlotTile.transform.SetParent(slots[x, 0].transform);
             slots[x, 0].SlotTile.transform.position = slots[x, 0].transform.position;
         }
 	}
