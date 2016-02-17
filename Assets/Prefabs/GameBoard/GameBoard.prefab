@@ -1,0 +1,76 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &113934
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 429060}
+  - 114: {fileID: 11455426}
+  m_Layer: 5
+  m_Name: GameBoard
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &429060
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 113934}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+--- !u!114 &11455426
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 113934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3545206dbf3c8aa40b626edcaaf517f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameBoardSlotPrefab: {fileID: 115106, guid: a5827932e6cd60d4492859b8d0a43ff7, type: 2}
+  selectedTilePrefab: {fileID: 135364, guid: 6b71937b0928a7540b50acc3933789fd, type: 2}
+  tilePrefab: {fileID: 188322, guid: fafd2ccb3a4a50b4b8fc95734b242bfa, type: 2}
+  boardWidth: 5
+  boardHeight: 5
+  boardPadding: {x: 0, y: 0, z: 0.25, w: 0.25}
+  lastSlot: {fileID: 0}
+  pickedUpTile: {fileID: 0}
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: gameBoardSlotPrefab
+      value: 
+      objectReference: {fileID: 115106, guid: a5827932e6cd60d4492859b8d0a43ff7, type: 2}
+    - target: {fileID: 0}
+      propertyPath: selectedTilePrefab
+      value: 
+      objectReference: {fileID: 135364, guid: 6b71937b0928a7540b50acc3933789fd, type: 2}
+    - target: {fileID: 0}
+      propertyPath: tilePrefab
+      value: 
+      objectReference: {fileID: 188322, guid: fafd2ccb3a4a50b4b8fc95734b242bfa, type: 2}
+    - target: {fileID: 0}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 113934}
+  m_IsPrefabParent: 1
