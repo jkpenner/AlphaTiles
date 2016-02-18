@@ -9,14 +9,35 @@ public class GameManager : Singleton<GameManager> {
 
     public int boardSize = 2;
 
-    public void Start() {
-        activeGameBoard.GenerateBoard(5, 5);
-        for (int x = 0; x < 5; x++) {
-            var tile = Instantiate(prefabTileObject).GetComponent<Tile>();
-            tile.SetText("" + (char)((int)('A') + x));
+    public float delayTillFlip = 1f;
 
-            activeGameBoard.SetTile(x, 0, tile);
+    public GameState ActiveState {
+        get; private set;
+    }
+
+    public void Start() {
+        ActiveState = GameState.Cinematic;
+        activeGameBoard.GenerateBoard(5, 5);
+        StartCoroutine("PopulateGameBoard");
+    }
+
+    private IEnumerator PopulateGameBoard() {
+        for (int i = 0; i < activeGameBoard.slots.GetLength(0); i++) {
+            var tile = Instantiate(prefabTileObject).GetComponent<Tile>();
+            tile.SetText("" + (char)((int)('A') + i));
+            activeGameBoard.SetTile(i, 0, tile);
+            tile.Drop(activeGameBoard.slots[i, 0].transform);
+            yield return new WaitForSeconds(0.1f);
         }
+
+        yield return new WaitForSeconds(delayTillFlip);
+
+        for (int i = 0; i < activeGameBoard.slots.GetLength(0); i++) {
+            activeGameBoard.slots[i, 0].SlotTile.FlipDown();
+            yield return new WaitForSeconds(0.2f);
+        }
+
+        ActiveState = GameState.Active;
     }
 
     public Tile CreateTile() {
