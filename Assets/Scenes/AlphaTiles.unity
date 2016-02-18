@@ -190,7 +190,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 429060, guid: 8acf68bf24b9f9f408b4911499a5065c, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 429060, guid: 8acf68bf24b9f9f408b4911499a5065c, type: 2}
       propertyPath: m_LocalPosition.z
@@ -214,7 +214,65 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 429060, guid: 8acf68bf24b9f9f408b4911499a5065c, type: 2}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 113934, guid: 8acf68bf24b9f9f408b4911499a5065c, type: 2}
+      propertyPath: m_Name
+      value: GameBoardStart
+      objectReference: {fileID: 0}
+    - target: {fileID: 11455426, guid: 8acf68bf24b9f9f408b4911499a5065c, type: 2}
+      propertyPath: boardSpacing.x
+      value: 0.1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 8acf68bf24b9f9f408b4911499a5065c, type: 2}
+  m_IsPrefabParent: 0
+--- !u!1001 &1200798782
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 429060, guid: 8acf68bf24b9f9f408b4911499a5065c, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 429060, guid: 8acf68bf24b9f9f408b4911499a5065c, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 429060, guid: 8acf68bf24b9f9f408b4911499a5065c, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 429060, guid: 8acf68bf24b9f9f408b4911499a5065c, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 429060, guid: 8acf68bf24b9f9f408b4911499a5065c, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 429060, guid: 8acf68bf24b9f9f408b4911499a5065c, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 429060, guid: 8acf68bf24b9f9f408b4911499a5065c, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 429060, guid: 8acf68bf24b9f9f408b4911499a5065c, type: 2}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 113934, guid: 8acf68bf24b9f9f408b4911499a5065c, type: 2}
+      propertyPath: m_Name
+      value: GameBoardResult
+      objectReference: {fileID: 0}
+    - target: {fileID: 11455426, guid: 8acf68bf24b9f9f408b4911499a5065c, type: 2}
+      propertyPath: boardSpacing.x
+      value: 0.1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8acf68bf24b9f9f408b4911499a5065c, type: 2}
@@ -262,6 +320,18 @@ Prefab:
       propertyPath: activeGameBoard
       value: 
       objectReference: {fileID: 468616863}
+    - target: {fileID: 11422900, guid: ce5004ac6fee63f47a54a3661d1984ef, type: 2}
+      propertyPath: gameBoardStart
+      value: 
+      objectReference: {fileID: 468616863}
+    - target: {fileID: 11422900, guid: ce5004ac6fee63f47a54a3661d1984ef, type: 2}
+      propertyPath: gameBoardResult
+      value: 
+      objectReference: {fileID: 2078092297}
+    - target: {fileID: 11422900, guid: ce5004ac6fee63f47a54a3661d1984ef, type: 2}
+      propertyPath: boardSize
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ce5004ac6fee63f47a54a3661d1984ef, type: 2}
   m_IsPrefabParent: 0
@@ -307,3 +377,9 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: dadb8fe7ea046f14f9913d08f8b542b8, type: 2}
   m_IsPrefabParent: 0
+--- !u!114 &2078092297 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 11455426, guid: 8acf68bf24b9f9f408b4911499a5065c,
+    type: 2}
+  m_PrefabInternal: {fileID: 1200798782}
+  m_Script: {fileID: 11500000, guid: 3545206dbf3c8aa40b626edcaaf517f4, type: 3}

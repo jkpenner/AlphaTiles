@@ -42,6 +42,10 @@ public class Tile : MonoBehaviour {
         animator.SetTrigger("FlipDown");
     }
 
+    public void FlipUp() {
+        animator.SetTrigger("FlipUp");
+    }
+
     #region Animation Events
     // Called via animation
     public void OnPickUpStart() {

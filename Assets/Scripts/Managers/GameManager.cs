@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 public class GameManager : Singleton<GameManager> {
     protected GameManager() { }
@@ -22,6 +23,7 @@ public class GameManager : Singleton<GameManager> {
         ActiveState = GameState.Cinematic;
         gameBoardStart.GenerateBoard(boardSize, 1);
         gameBoardResult.GenerateBoard(boardSize, 1);
+        gameBoardResult.OnGameBoardFilled += OnResultFilled;
         StartCoroutine("PopulateGameBoard");
     }
 
@@ -68,9 +70,33 @@ public class GameManager : Singleton<GameManager> {
         }
 
         var letters = new string[count];
-        foreach (var i in values) {
-            letters[i] = "" + (char)i;
+        for (int i = 0; i < count; i++) {
+            letters[i] = "" + (char)values[i];
         }
         return letters;
+    }
+
+    public void OnResultFilled() {
+        ActiveState = GameState.Cinematic;
+        StartCoroutine("RevealTileResult");
+    }
+
+    private IEnumerator RevealTileResult() {
+        string letters = "";
+        for (int i = 0; i < gameBoardResult.slots.GetLength(0); i++) {
+            gameBoardResult.slots[i, 0].SlotTile.FlipUp();
+            letters += gameBoardResult.slots[i, 0].SlotTile.textmesh.text;
+            yield return new WaitForSeconds(0.2f);
+        }
+
+        if (IsAlphabetical(letters)) {
+            Debug.Log("Correct");
+        } else {
+            Debug.Log("Not Correct");
+        }
+    }
+
+    private bool IsAlphabetical(string letters) {
+        return letters.SequenceEqual(letters.OrderBy(c => c));
     }
 }

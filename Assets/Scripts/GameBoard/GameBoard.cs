@@ -24,6 +24,9 @@ public class GameBoard : MonoBehaviour{
     // References all tiles on the board
     public GameBoardSlot[,] slots;
 
+    public delegate void GameBoardEvent();
+    public event GameBoardEvent OnGameBoardFilled;
+
 	void Awake () {
         // Create instance of the selected tile object
         selectedTileObject = Instantiate(prefabTileSelected);
@@ -108,6 +111,16 @@ public class GameBoard : MonoBehaviour{
     }
 
     public void OnSlotTileChange(GameBoardSlot slot) {
+        bool isFilled = true;
+        foreach (var s in slots) {
+            if (s.SlotTile == null) {
+                isFilled = false;
+                break;
+            }
+        }
 
+        if (isFilled && OnGameBoardFilled != null) {
+            OnGameBoardFilled();
+        }
     }
 }
