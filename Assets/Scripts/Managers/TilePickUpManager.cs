@@ -94,15 +94,16 @@ public class TilePickUpManager : Singleton<TilePickUpManager> {
     }
 
     private void PickUpTile(GameBoardSlot slot) {
-        _lastSlot = slot;
-
         _pickedUpTile = slot.SlotTile;
+        _pickedUpTile.PickUp();
+
         _pickedUpTile.transform.SetParent(null);
         _pickedUpTile.GetComponent<Animator>().SetTrigger("PickUp");
         _pickedUpTile.OnPickUp();
-        SetSortingLayerRecur(_pickedUpTile.transform, "PickUp");
+        RendererUtility.SetSortingLayerRecursive(_pickedUpTile.transform, "PickUp");
 
         slot.SlotTile = null;
+        _lastSlot = slot;
     }
 
     private void DropTile(GameBoardSlot slot) {
@@ -112,7 +113,7 @@ public class TilePickUpManager : Singleton<TilePickUpManager> {
         _pickedUpTile.transform.SetParent(slot.transform);
         _pickedUpTile.GetComponent<Animator>().SetTrigger("Drop");
         _pickedUpTile.OnDrop();
-        SetSortingLayerRecur(_pickedUpTile.transform, "Default");
+        RendererUtility.SetSortingLayerRecursive(_pickedUpTile.transform, "Default");
 
         _lastSlot = null;
         _pickedUpTile = null;
@@ -129,7 +130,7 @@ public class TilePickUpManager : Singleton<TilePickUpManager> {
         } else {
             _pickedUpTile.OnDrop();
         }
-        SetSortingLayerRecur(_pickedUpTile.transform, "Default");
+        RendererUtility.SetSortingLayerRecursive(_pickedUpTile.transform, "Default");
 
         _lastSlot = null;
         _pickedUpTile = null;
@@ -142,13 +143,13 @@ public class TilePickUpManager : Singleton<TilePickUpManager> {
         oldtile.transform.SetParent(slot.transform);
         oldtile.GetComponent<Animator>().SetTrigger("Drop");
         oldtile.OnDrop();
-        SetSortingLayerRecur(oldtile.transform, "Default");
+        RendererUtility.SetSortingLayerRecursive(oldtile.transform, "Default");
 
         _pickedUpTile = slot.SlotTile;
         _pickedUpTile.transform.SetParent(null);
         _pickedUpTile.GetComponent<Animator>().SetTrigger("PickUp");
         _pickedUpTile.OnPickUp();
-        SetSortingLayerRecur(_pickedUpTile.transform, "PickUp");
+        RendererUtility.SetSortingLayerRecursive(_pickedUpTile.transform, "PickUp");
 
         slot.SlotTile = oldtile;
         _lastSlot = slot;
@@ -160,32 +161,19 @@ public class TilePickUpManager : Singleton<TilePickUpManager> {
         oldtile.transform.SetParent(slot.transform);
         oldtile.GetComponent<Animator>().SetTrigger("Drop");
         oldtile.OnDrop();
-        SetSortingLayerRecur(oldtile.transform, "Default");
+        RendererUtility.SetSortingLayerRecursive(oldtile.transform, "Default");
 
         var newTile = slot.SlotTile;
         newTile.transform.position = _lastSlot.transform.position;
         newTile.transform.SetParent(_lastSlot.transform);
         newTile.GetComponent<Animator>().SetTrigger("Drop");
         newTile.OnDrop();
-        SetSortingLayerRecur(newTile.transform, "Default");
+        RendererUtility.SetSortingLayerRecursive(newTile.transform, "Default");
 
         slot.SlotTile = oldtile;
         _lastSlot.SlotTile = newTile;
 
         _lastSlot = null;
         _pickedUpTile = null;
-    }
-
-    private void SetSortingLayerRecur(Transform obj, string layer) {
-        if (obj != null) {
-            var sRender = obj.GetComponent<Renderer>();
-            if (sRender != null) {
-                sRender.sortingLayerName = layer;
-            }
-
-            for (int i = 0; i < obj.childCount; i++) {
-                SetSortingLayerRecur(obj.GetChild(i), layer);
-            }
-        }
     }
 }
