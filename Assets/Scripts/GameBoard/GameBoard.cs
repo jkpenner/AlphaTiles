@@ -66,8 +66,11 @@ public class GameBoard : MonoBehaviour{
         boardHeight = height;
 
         // Calculate the min values for positions of tiles
-        float xMin = (boardWidth + (boardSpacing.x * (boardWidth - 1f))) / 2f;
-        float yMin = (boardHeight + (boardSpacing.y * (boardHeight - 1f))) / 2f;
+        float xMin = -(boardWidth + (boardSpacing.x * (boardWidth - 1f))) / 2f;
+        xMin += (xMin % 2 == 0 ? 0 : 0.5f + boardSpacing.x);
+
+        float yMin = -(boardHeight + (boardSpacing.y * (boardHeight - 1f))) / 2f;
+        yMin += (yMin % 2 == 0 ? 0 : 0.5f + boardSpacing.y);
 
         // Create the background slots for each tile
         slots = new GameBoardSlot[boardWidth, boardHeight];
@@ -80,8 +83,8 @@ public class GameBoard : MonoBehaviour{
                 tileGO.name = prefabGameBoardSlot.name + (y * boardWidth + x);
                 tileGO.transform.SetParent(tileGroup);
                 tileGO.transform.localPosition = new Vector3(
-                    x + (boardSpacing.x * (x - 1)) - xMin,
-                    y + (boardSpacing.y * (y - 1)) - yMin, 0f);
+                    xMin + x + (boardSpacing.x * (x - 1)),
+                    yMin + y + (boardSpacing.y * (y - 1)), 0f);
             }
         }
     }
