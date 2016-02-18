@@ -39,14 +39,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3545206dbf3c8aa40b626edcaaf517f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameBoardSlotPrefab: {fileID: 115106, guid: a5827932e6cd60d4492859b8d0a43ff7, type: 2}
-  selectedTilePrefab: {fileID: 135364, guid: 6b71937b0928a7540b50acc3933789fd, type: 2}
-  tilePrefab: {fileID: 188322, guid: fafd2ccb3a4a50b4b8fc95734b242bfa, type: 2}
+  generateBoardOnStart: 0
+  prefabGameBoardSlot: {fileID: 115106, guid: a5827932e6cd60d4492859b8d0a43ff7, type: 2}
+  prefabTileSelected: {fileID: 135364, guid: 6b71937b0928a7540b50acc3933789fd, type: 2}
   boardWidth: 5
   boardHeight: 5
-  boardPadding: {x: 0, y: 0, z: 0.25, w: 0.25}
-  lastSlot: {fileID: 0}
-  pickedUpTile: {fileID: 0}
+  boardSpacing: {x: 0, y: 0}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
@@ -70,6 +68,18 @@ Prefab:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: prefabTileBackground
+      value: 
+      objectReference: {fileID: 115106, guid: a5827932e6cd60d4492859b8d0a43ff7, type: 2}
+    - target: {fileID: 0}
+      propertyPath: prefabTileSelected
+      value: 
+      objectReference: {fileID: 135364, guid: 6b71937b0928a7540b50acc3933789fd, type: 2}
+    - target: {fileID: 0}
+      propertyPath: prefabGameBoardSlot
+      value: 
+      objectReference: {fileID: 115106, guid: a5827932e6cd60d4492859b8d0a43ff7, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 113934}
