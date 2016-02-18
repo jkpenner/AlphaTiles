@@ -72,6 +72,7 @@ public class GameBoard : MonoBehaviour{
             for (int y = 0; y < boardHeight; y++) {
                 var tileGO = Instantiate(prefabGameBoardSlot);
                 slots[x, y] = tileGO.GetComponent<GameBoardSlot>();
+                slots[x, y].AddListener(OnSlotTileChange);
 
                 tileGO.name = prefabGameBoardSlot.name + (y * boardWidth + x);
                 tileGO.transform.SetParent(tileGroup);
@@ -104,5 +105,9 @@ public class GameBoard : MonoBehaviour{
             slot.SlotTile.transform.SetParent(slot.transform);
             slot.SlotTile.transform.position = slot.transform.position;
         }
+    }
+
+    public void OnSlotTileChange(GameBoardSlot slot) {
+
     }
 }
