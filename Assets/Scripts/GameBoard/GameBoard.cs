@@ -33,11 +33,6 @@ public class GameBoard : MonoBehaviour{
         selectedTileObject.transform.SetParent(this.transform);
         selectedTileObject.SetActive(false);
 
-        // Create a sub group for all the tiles to be parented to
-        tileGroup = new GameObject("Tiles").transform;
-        tileGroup.SetParent(this.transform);
-        tileGroup.localPosition = Vector2.zero;
-
         if (generateBoardOnStart) {
             GenerateBoard(boardWidth, boardHeight);
         }
@@ -61,6 +56,11 @@ public class GameBoard : MonoBehaviour{
         // ToDo: Reuse old GameBoardSlot's to reduce
         // amount of instantiating during generating board
         DestroyBoard();
+
+        // Create a sub group for all the tiles to be parented to
+        tileGroup = new GameObject("Tiles").transform;
+        tileGroup.SetParent(this.transform);
+        tileGroup.localPosition = Vector2.zero;
 
         boardWidth = width;
         boardHeight = height;
@@ -91,13 +91,18 @@ public class GameBoard : MonoBehaviour{
 
     public void DestroyBoard() {
         if (slots != null) {
-            for (int x = 0; x < slots.GetLength(0); x++) {
-                for (int y = 0; y < slots.GetLength(1); y++) {
+            Destroy(tileGroup.gameObject);
+            slots = null;
+        }
+    }
+
+    public void ClearBoard() {
+        for (int x = 0; x < boardWidth; x++) {
+            for (int y = 0; y < boardHeight; y++) {
+                if (slots[x, y].SlotTile != null) {
                     Destroy(slots[x, y].SlotTile.gameObject);
-                    Destroy(slots[x, y].gameObject);
                 }
             }
-            slots = null;
         }
     }
 
