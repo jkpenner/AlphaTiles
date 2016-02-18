@@ -47,7 +47,6 @@ public class Tile : MonoBehaviour {
     }
 
     #region Animation Events
-    // Called via animation
     public void OnPickUpStart() {
         if (audioSourc != null) {
             audioSourc.PlayOneShot(pickUpClip);
@@ -55,12 +54,10 @@ public class Tile : MonoBehaviour {
         RendererUtility.SetSortingLayerRecursive(transform, "PickUp");
     }
 
-    // Called via animation
     public void OnPickUpComplete() {
 
     }
 
-    // Called via animation
     public void OnDropStart() {
         if (audioSourc != null) {
             if (_isInvalidDrop) {
@@ -71,7 +68,6 @@ public class Tile : MonoBehaviour {
         }
     }
 
-    // Called via animation
     public void OnDropComplete() {
         RendererUtility.SetSortingLayerRecursive(transform, "Default");
     }

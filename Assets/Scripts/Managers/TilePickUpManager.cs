@@ -4,8 +4,12 @@ using System.Collections;
 public class TilePickUpManager : Singleton<TilePickUpManager> {
     protected TilePickUpManager() { }
 
+    // The slot the picked up tile was last located
     private GameBoardSlot _lastSlot;
+    // The tile currently picked up
     private Tile _pickedUpTile;
+
+    // Was the current drop invalid
     private bool _invalidDrop = false;
 
     public enum DropType {

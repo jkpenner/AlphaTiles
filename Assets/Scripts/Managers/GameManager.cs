@@ -46,12 +46,13 @@ public class GameManager : Singleton<GameManager> {
             boardSize = 2;
         } 
         // Restrict below 14, more will
-        // spill of screen
+        // spill off screen
         else if (boardSize > 14) {
             boardSize = 14;
         }
     }
 
+    // Will Generate the Board with the current boardSize
     public void GenerateBoard() {
         IsGenerating = true;
         ActiveState = GameState.Cinematic;
@@ -61,11 +62,12 @@ public class GameManager : Singleton<GameManager> {
         StartCoroutine("PopulateGameBoard");
     }
 
+    // Populates the Gameboard with delayed spawning and animations
     private IEnumerator PopulateGameBoard() {
         var letters = GenerateRandomLetters(gameBoardStart.slots.GetLength(0));
 
         for (int i = 0; i < gameBoardStart.slots.GetLength(0); i++) {
-            var tile = Instantiate(prefabTileObject).GetComponent<Tile>();
+            var tile = CreateTile();
             tile.SetText(letters[i]);
             gameBoardStart.SetTile(i, 0, tile);
             tile.Drop(gameBoardStart.slots[i, 0].transform);
@@ -95,6 +97,7 @@ public class GameManager : Singleton<GameManager> {
         return null;
     }
 
+    // Creates a set of letters with no matching letters
     public string[] GenerateRandomLetters(int count) {
         List<int> values = new List<int>();
         while(values.Count < count) {
