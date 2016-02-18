@@ -15,6 +15,8 @@ public class GameManager : Singleton<GameManager> {
 
     public float delayTillFlip = 1f;
 
+    public bool IsGenerating { get; set; }
+
     public delegate void GameStateEvent(GameState state);
     public event GameStateEvent OnGameStateChange;
 
@@ -34,10 +36,28 @@ public class GameManager : Singleton<GameManager> {
     }
 
     public void Start() {
+        gameBoardResult.OnGameBoardFilled += OnResultFilled;
+        GenerateBoard();
+    }
+
+    public void ModifyBoardSize(int amount) {
+        boardSize += amount;
+        if (boardSize < 2) {
+            boardSize = 2;
+        } 
+        // Restrict below 14, more will
+        // spill of screen
+        else if (boardSize > 14) {
+            boardSize = 14;
+        }
+    }
+
+    public void GenerateBoard() {
+        IsGenerating = true;
         ActiveState = GameState.Cinematic;
         gameBoardStart.GenerateBoard(boardSize, 1);
         gameBoardResult.GenerateBoard(boardSize, 1);
-        gameBoardResult.OnGameBoardFilled += OnResultFilled;
+        
         StartCoroutine("PopulateGameBoard");
     }
 
@@ -60,6 +80,7 @@ public class GameManager : Singleton<GameManager> {
         }
 
         ActiveState = GameState.Active;
+        IsGenerating = false;
     }
 
     public Tile CreateTile() {
@@ -104,9 +125,9 @@ public class GameManager : Singleton<GameManager> {
         }
 
         if (IsAlphabetical(letters)) {
-            Debug.Log("Correct");
+            ActiveState = GameState.GameWin;
         } else {
-            Debug.Log("Not Correct");
+            ActiveState = GameState.GameOver;
         }
     }
 
