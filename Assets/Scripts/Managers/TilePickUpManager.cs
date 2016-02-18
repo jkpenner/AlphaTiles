@@ -112,7 +112,7 @@ public class TilePickUpManager : Singleton<TilePickUpManager> {
     private void ReturnTileToLastSlot() {
         _lastSlot.SlotTile = _pickedUpTile;
         if (_invalidDrop) {
-            _pickedUpTile.DropInvalid(_lastSlot.transform);
+            _pickedUpTile.Drop(_lastSlot.transform, true);
         } else {
             _pickedUpTile.Drop(_lastSlot.transform);
         }

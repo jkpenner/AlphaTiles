@@ -28,20 +28,21 @@ public class Tile : MonoBehaviour {
     }
 
     public void Drop(Transform parent) {
-        Internal_Drop(parent, false);
+        Drop(parent, false);
     }
 
-    public void DropInvalid(Transform parent) {
-        Internal_Drop(parent, true);
-    }
-
-    private void Internal_Drop(Transform parent, bool invalid) {
+    public void Drop(Transform parent, bool invalid) {
         _isInvalidDrop = invalid;
         transform.SetParent(parent);
         transform.localPosition = Vector3.zero;
         animator.SetTrigger("Drop");
     }
 
+    public void FlipDown() {
+        animator.SetTrigger("FlipDown");
+    }
+
+    #region Animation Events
     // Called via animation
     public void OnPickUpStart() {
         if (audioSourc != null) {
@@ -70,4 +71,25 @@ public class Tile : MonoBehaviour {
     public void OnDropComplete() {
         RendererUtility.SetSortingLayerRecursive(transform, "Default");
     }
+
+    public void OnFlipDownStart() {
+        if (audioSourc != null) {
+            audioSourc.PlayOneShot(pickUpClip);
+        }
+    }
+
+    public void OnFlipDownComplete() {
+        textmesh.gameObject.SetActive(false);
+    }
+
+    public void OnFlipUpStart() {
+        if (audioSourc != null) {
+            audioSourc.PlayOneShot(pickUpClip);
+        }
+    }
+
+    public void OnFlipUpComplete() {
+        textmesh.gameObject.SetActive(true);
+    }
+    #endregion
 }
