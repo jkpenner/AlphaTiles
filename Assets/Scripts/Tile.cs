@@ -1,21 +1,19 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.EventSystems;
-using System;
 
-public class Tile : MonoBehaviour, IPointerClickHandler, IDragHandler {
+public class Tile : MonoBehaviour {
+    private Animator animator;
+
     public TextMesh textmesh;
+
     public AudioSource audioSourc;
     public AudioClip dropClip;
     public AudioClip pickUpClip;
     public AudioClip invalidDropClip;
 
-    public void OnDrag(PointerEventData eventData) {
-        throw new NotImplementedException();
-    }
+    private bool _isInvalidDrop = false;
 
-    public void OnPointerClick(PointerEventData eventData) {
-        throw new NotImplementedException();
+    public void Awake() {
+        animator = GetComponent<Animator>();
     }
 
     public void SetText(string value) {
@@ -24,21 +22,52 @@ public class Tile : MonoBehaviour, IPointerClickHandler, IDragHandler {
         }
     }
 
-    public void OnPickUp() {
+    public void PickUp() {
+        transform.SetParent(null);
+        animator.SetTrigger("PickUp");
+    }
+
+    public void Drop(Transform parent) {
+        Internal_Drop(parent, false);
+    }
+
+    public void DropInvalid(Transform parent) {
+        Internal_Drop(parent, true);
+    }
+
+    private void Internal_Drop(Transform parent, bool invalid) {
+        _isInvalidDrop = invalid;
+        transform.SetParent(parent);
+        transform.localPosition = Vector3.zero;
+        animator.SetTrigger("Drop");
+    }
+
+    // Called via animation
+    public void OnPickUpStart() {
         if (audioSourc != null) {
             audioSourc.PlayOneShot(pickUpClip);
         }
+        RendererUtility.SetSortingLayerRecursive(transform, "PickUp");
     }
 
-    public void OnDrop() {
+    // Called via animation
+    public void OnPickUpComplete() {
+
+    }
+
+    // Called via animation
+    public void OnDropStart() {
         if (audioSourc != null) {
-            audioSourc.PlayOneShot(dropClip);
+            if (_isInvalidDrop) {
+                audioSourc.PlayOneShot(invalidDropClip);
+            } else {
+                audioSourc.PlayOneShot(dropClip);
+            }
         }
     }
 
-    public void OnInvalidDrop() {
-        if (audioSourc != null) {
-            audioSourc.PlayOneShot(invalidDropClip);
-        }
+    // Called via animation
+    public void OnDropComplete() {
+        RendererUtility.SetSortingLayerRecursive(transform, "Default");
     }
 }

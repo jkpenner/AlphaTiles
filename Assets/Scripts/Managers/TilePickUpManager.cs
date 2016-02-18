@@ -95,25 +95,15 @@ public class TilePickUpManager : Singleton<TilePickUpManager> {
 
     private void PickUpTile(GameBoardSlot slot) {
         _pickedUpTile = slot.SlotTile;
-        _pickedUpTile.PickUp();
-
-        _pickedUpTile.transform.SetParent(null);
-        _pickedUpTile.GetComponent<Animator>().SetTrigger("PickUp");
-        _pickedUpTile.OnPickUp();
-        RendererUtility.SetSortingLayerRecursive(_pickedUpTile.transform, "PickUp");
-
-        slot.SlotTile = null;
         _lastSlot = slot;
+
+        slot.SlotTile.PickUp();
+        slot.SlotTile = null;
     }
 
     private void DropTile(GameBoardSlot slot) {
         slot.SlotTile = _pickedUpTile;
-
-        _pickedUpTile.transform.position = slot.transform.position;
-        _pickedUpTile.transform.SetParent(slot.transform);
-        _pickedUpTile.GetComponent<Animator>().SetTrigger("Drop");
-        _pickedUpTile.OnDrop();
-        RendererUtility.SetSortingLayerRecursive(_pickedUpTile.transform, "Default");
+        slot.SlotTile.Drop(slot.transform);
 
         _lastSlot = null;
         _pickedUpTile = null;
@@ -121,16 +111,11 @@ public class TilePickUpManager : Singleton<TilePickUpManager> {
 
     private void ReturnTileToLastSlot() {
         _lastSlot.SlotTile = _pickedUpTile;
-
-        _pickedUpTile.transform.position = _lastSlot.transform.position;
-        _pickedUpTile.transform.SetParent(_lastSlot.transform);
-        _pickedUpTile.GetComponent<Animator>().SetTrigger("Drop");
         if (_invalidDrop) {
-            _pickedUpTile.OnInvalidDrop();
+            _pickedUpTile.DropInvalid(_lastSlot.transform);
         } else {
-            _pickedUpTile.OnDrop();
+            _pickedUpTile.Drop(_lastSlot.transform);
         }
-        RendererUtility.SetSortingLayerRecursive(_pickedUpTile.transform, "Default");
 
         _lastSlot = null;
         _pickedUpTile = null;
@@ -139,17 +124,10 @@ public class TilePickUpManager : Singleton<TilePickUpManager> {
 
     private void SwapTileWithPickedUp(GameBoardSlot slot) {
         var oldtile = _pickedUpTile;
-        oldtile.transform.position = slot.transform.position;
-        oldtile.transform.SetParent(slot.transform);
-        oldtile.GetComponent<Animator>().SetTrigger("Drop");
-        oldtile.OnDrop();
-        RendererUtility.SetSortingLayerRecursive(oldtile.transform, "Default");
+        oldtile.Drop(slot.transform);
 
         _pickedUpTile = slot.SlotTile;
-        _pickedUpTile.transform.SetParent(null);
-        _pickedUpTile.GetComponent<Animator>().SetTrigger("PickUp");
-        _pickedUpTile.OnPickUp();
-        RendererUtility.SetSortingLayerRecursive(_pickedUpTile.transform, "PickUp");
+        _pickedUpTile.PickUp();
 
         slot.SlotTile = oldtile;
         _lastSlot = slot;
@@ -157,18 +135,10 @@ public class TilePickUpManager : Singleton<TilePickUpManager> {
 
     private void SwapTileWithLastSlot(GameBoardSlot slot) {
         var oldtile = _pickedUpTile;
-        oldtile.transform.position = slot.transform.position;
-        oldtile.transform.SetParent(slot.transform);
-        oldtile.GetComponent<Animator>().SetTrigger("Drop");
-        oldtile.OnDrop();
-        RendererUtility.SetSortingLayerRecursive(oldtile.transform, "Default");
+        oldtile.Drop(slot.transform);
 
         var newTile = slot.SlotTile;
-        newTile.transform.position = _lastSlot.transform.position;
-        newTile.transform.SetParent(_lastSlot.transform);
-        newTile.GetComponent<Animator>().SetTrigger("Drop");
-        newTile.OnDrop();
-        RendererUtility.SetSortingLayerRecursive(newTile.transform, "Default");
+        newTile.Drop(_lastSlot.transform);
 
         slot.SlotTile = oldtile;
         _lastSlot.SlotTile = newTile;
