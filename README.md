@@ -14,10 +14,16 @@ Upon placing the tiles in the correct order, the player has the option to increa
 
 ##Project Build Directions
 1) Download Required Version of Unity 5.3.2
+
 2) Open AlphaTiles Project into Unity
+
 3) Open BuildSettings in Unity (File->BuildSettings)
+
 4) Add Scene file AlphaTiles to 'Scenes in Build'
+
 5) Set Platform to WebGL
+
 6) Click Build or Build & Run
+
 7) Once building finishes, open build location and open index.html
 
