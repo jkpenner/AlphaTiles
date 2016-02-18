@@ -46,36 +46,25 @@ public class GameInterface : Singleton<GameInterface> {
             UpdateScoreValues();
             isCorrect.gameObject.SetActive(true);
             menuPanel.gameObject.SetActive(true);
-
-            if (audioSource != null) {
-                audioSource.PlayOneShot(loseClip);
-            }
-
+            PlayAudio(loseClip);
+            
             isCorrect.text = "Incorrect";
-            if (GameManager.Instance.boardSize <= 2) {
-                previousBtn.gameObject.SetActive(false);
-            } else {
-                previousBtn.gameObject.SetActive(true);
-            }
+
+            previousBtn.gameObject.SetActive(GameManager.Instance.boardSize > 2);
             nextBtn.gameObject.SetActive(false);
+
             animator.SetTrigger("Show");
             _isVisable = true;
         } else if (state == GameState.GameWin) {
             UpdateScoreValues();
-            isCorrect.gameObject.SetActive(true);
-            menuPanel.gameObject.SetActive(true);
-
-            if (audioSource != null) {
-                audioSource.PlayOneShot(winClip);
-            }
+            ToggleMainElements(true);
+            PlayAudio(winClip);
 
             isCorrect.text = "Correct";
-            if (GameManager.Instance.boardSize <= 2) {
-                previousBtn.gameObject.SetActive(false);
-            } else {
-                previousBtn.gameObject.SetActive(true);
-            }
+
+            previousBtn.gameObject.SetActive(GameManager.Instance.boardSize > 2);
             nextBtn.gameObject.SetActive(true);
+
             animator.SetTrigger("Show");
             _isVisable = true;
         } else if (_isVisable) {
@@ -84,26 +73,31 @@ public class GameInterface : Singleton<GameInterface> {
         }
     }
 
+    public void ToggleMainElements(bool value) {
+        isCorrect.gameObject.SetActive(value);
+        menuPanel.gameObject.SetActive(value);
+    }
+
     public void OnPreviousClick() {
         GameManager.Instance.ModifyBoardSize(-1);
         GameManager.Instance.ActiveState = GameState.Cinematic;
-        PlayButtonPressAudio();
+        PlayAudio(buttonPressClip);
     }
 
     public void OnReplayClick() {
         GameManager.Instance.ActiveState = GameState.Cinematic;
-        PlayButtonPressAudio();
+        PlayAudio(buttonPressClip);
     }
 
     public void OnNextClick() {
         GameManager.Instance.ModifyBoardSize(1);
         GameManager.Instance.ActiveState = GameState.Cinematic;
-        PlayButtonPressAudio();
+        PlayAudio(buttonPressClip);
     }
 
-    private void PlayButtonPressAudio() {
+    private void PlayAudio(AudioClip clip) {
         if (audioSource != null) {
-            audioSource.PlayOneShot(buttonPressClip);
+            audioSource.PlayOneShot(clip);
         }
     }
 
