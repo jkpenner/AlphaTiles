@@ -15,8 +15,22 @@ public class GameManager : Singleton<GameManager> {
 
     public float delayTillFlip = 1f;
 
+    public delegate void GameStateEvent(GameState state);
+    public event GameStateEvent OnGameStateChange;
+
+    private GameState _activeState = GameState.None;
     public GameState ActiveState {
-        get; private set;
+        get {
+            return _activeState;
+        }
+        set {
+            if (_activeState != value) {
+                _activeState = value;
+                if (OnGameStateChange != null) {
+                    OnGameStateChange(_activeState);
+                }
+            }
+        }
     }
 
     public void Start() {
