@@ -26,30 +26,33 @@ public class TilePickUpManager : Singleton<TilePickUpManager> {
     public DropType dropType = DropType.ReturnToLast;
 
     public void Update() {
-        // On Mouse Down pick up tile if there is one
-        // under the mouse's current location
-        if (Input.GetMouseButtonDown(0)) {
-            if (_pickedUpTile != null) {
-                HandleTileDrop();
-            } else {
-                HandleTilePickUp();
+        // Only Check for player input when the game is active
+        if (GameManager.Instance.ActiveState == GameState.Active) {
+            // On Mouse Down pick up tile if there is one
+            // under the mouse's current location
+            if (Input.GetMouseButtonDown(0)) {
+                if (_pickedUpTile != null) {
+                    HandleTileDrop();
+                } else {
+                    HandleTilePickUp();
+                }
             }
-        }
 
-        // On Mouse Up drop tile into open slot under
-        // the mouse or move it back to the last slot
-        if (Input.GetMouseButtonUp(0)) {
-            if (_pickedUpTile != null) {
-                HandleTileDrop();
+            // On Mouse Up drop tile into open slot under
+            // the mouse or move it back to the last slot
+            if (Input.GetMouseButtonUp(0)) {
+                if (_pickedUpTile != null) {
+                    HandleTileDrop();
+                }
             }
-        }
 
-        // Updates the Following Tile towards the mouse's position
-        if (_pickedUpTile != null) {
-            Vector3 followPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            followPoint.z = _pickedUpTile.transform.position.z;
-            _pickedUpTile.transform.position = Vector3.Lerp(followPoint,
-                _pickedUpTile.transform.position, 10 * Time.deltaTime);
+            // Updates the Following Tile towards the mouse's position
+            if (_pickedUpTile != null) {
+                Vector3 followPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                followPoint.z = _pickedUpTile.transform.position.z;
+                _pickedUpTile.transform.position = Vector3.Lerp(followPoint,
+                    _pickedUpTile.transform.position, 10 * Time.deltaTime);
+            }
         }
     }
 

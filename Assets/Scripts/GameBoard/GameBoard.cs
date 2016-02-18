@@ -41,13 +41,16 @@ public class GameBoard : MonoBehaviour{
 	}
 
     public void Update() {
-        // Gets the GameBoardSlot under the mouse and move the selected tile object to its position
-        var hitinfo = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
-        if (hitinfo.collider != null && hitinfo.transform.GetComponent<GameBoardSlot>() != null) {
-            selectedTileObject.SetActive(true);
-            selectedTileObject.transform.position = hitinfo.transform.position;
-        } else {
-            selectedTileObject.SetActive(false);
+        // Only Check for player input when the game is active
+        if (GameManager.Instance.ActiveState == GameState.Active) {
+            // Gets the GameBoardSlot under the mouse and move the selected tile object to its position
+            var hitinfo = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
+            if (hitinfo.collider != null && hitinfo.transform.GetComponent<GameBoardSlot>() != null) {
+                selectedTileObject.SetActive(true);
+                selectedTileObject.transform.position = hitinfo.transform.position;
+            } else {
+                selectedTileObject.SetActive(false);
+            }
         }
     }
 
