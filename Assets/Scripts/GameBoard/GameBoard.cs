@@ -49,6 +49,8 @@ public class GameBoard : MonoBehaviour{
             } else {
                 selectedTileObject.SetActive(false);
             }
+        } else {
+            selectedTileObject.SetActive(false);
         }
     }
 
