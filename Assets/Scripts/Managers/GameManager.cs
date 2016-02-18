@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class GameManager : Singleton<GameManager> {
     protected GameManager() { }
@@ -25,9 +26,11 @@ public class GameManager : Singleton<GameManager> {
     }
 
     private IEnumerator PopulateGameBoard() {
+        var letters = GenerateRandomLetters(gameBoardStart.slots.GetLength(0));
+
         for (int i = 0; i < gameBoardStart.slots.GetLength(0); i++) {
             var tile = Instantiate(prefabTileObject).GetComponent<Tile>();
-            tile.SetText("" + (char)((int)('A') + i));
+            tile.SetText(letters[i]);
             gameBoardStart.SetTile(i, 0, tile);
             tile.Drop(gameBoardStart.slots[i, 0].transform);
             yield return new WaitForSeconds(0.1f);
@@ -53,5 +56,21 @@ public class GameManager : Singleton<GameManager> {
             return tile;
         }
         return null;
+    }
+
+    public string[] GenerateRandomLetters(int count) {
+        List<int> values = new List<int>();
+        while(values.Count < count) {
+            var num = Random.Range(65, 91);
+            if (!values.Contains(num)) {
+                values.Add(num);
+            }
+        }
+
+        var letters = new string[count];
+        foreach (var i in values) {
+            letters[i] = "" + (char)i;
+        }
+        return letters;
     }
 }
