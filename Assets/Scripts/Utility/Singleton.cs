@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Singleton<T> : MonoBehaviour where T : MonoBehaviour {
     static private T _instance;
-    static private T Instance {
+    static public T Instance {
         get {
             if (_instance == null) {
                 _instance = FindObjectOfType<T>();
